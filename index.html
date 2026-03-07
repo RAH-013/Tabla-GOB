@@ -230,6 +230,7 @@
             filteredData = data.filter(item => {
                 const nombre = (item["NOMBRE COMERCIAL"] || "").toLowerCase();
                 const folio = (item.FOLIO || "").toLowerCase();
+                const representante = (item["REPRESENTANTE LEGAL"] || "").toLowerCase();
 
                 return nombre.includes(term) || folio.includes(term);
             });
