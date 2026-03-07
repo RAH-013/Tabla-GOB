@@ -231,8 +231,10 @@
                 const nombre = (item["NOMBRE COMERCIAL"] || "").toLowerCase();
                 const folio = (item.FOLIO || "").toLowerCase();
                 const representante = (item["REPRESENTANTE LEGAL"] || "").toLowerCase();
+                const entrega = (item.ENTREGA || "").toLowerCase();
+                const vigencia = (item.VIGENCIA || "").toLowerCase();
 
-                return nombre.includes(term) || folio.includes(term);
+                return nombre.includes(term) || folio.includes(term) || representante.includes(term) || entrega.includes(term) || vigencia.includes(term);
             });
 
             currentPage = 1;
