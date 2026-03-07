@@ -17,6 +17,10 @@
     <div class="container-fluid mt-3 min-vh-100">
         <div class="row h-100">
 
+            <div class="mb-3">
+                <input type="text" id="buscador" class="form-control" placeholder="Buscar por nombre o folio...">
+            </div>
+
             <!-- LISTA LATERAL -->
             <div class="col-md-4 d-flex flex-column">
                 <div class="bg-secondary text-white text-center py-2 rounded-top">
@@ -58,6 +62,16 @@
     </div>
 
     <script>
+        const escapeHTML = str => {
+            if (!str) return "";
+            return String(str)
+                .replace(/&/g, "&amp;")
+                .replace(/</g, "&lt;")
+                .replace(/>/g, "&gt;")
+                .replace(/"/g, "&quot;")
+                .replace(/'/g, "&#039;");
+        };
+
         const pageSize = 6;
         let currentPage = 1;
         let data = [];
@@ -100,9 +114,12 @@
 
         // Renderiza la lista lateral
         const renderList = () => {
+            //si hay busqueda
+            const sourceData = document.getElementById("buscador").value !== "" ? filteredData : data;
+
             const start = (currentPage - 1) * pageSize;
             const end = start + pageSize;
-            const page = data.slice(start, end);
+            const page = sourceData.slice(start, end);
 
             const lista = document.getElementById("lista");
             lista.innerHTML = "";
@@ -110,42 +127,55 @@
             page.forEach(item => {
                 const a = document.createElement("a");
                 a.className = "list-group-item list-group-item-action d-flex align-items-center gap-3";
+
+                const fotoURL = item.FOTO || 'https://via.placeholder.com/120';
+                const folioText = escapeHTML(item.FOLIO)
+
                 a.innerHTML = `
-                    <img src="${item.FOTO || 'https://via.placeholder.com/40'}" width="40" class="rounded" alt="Logo">
-                    <span>${item.FOLIO || ''}</span>
+                    <img src="${fotoURL}" width="40" class="rounded" alt="Logo">
+                    <span>${folioText || ''}</span>
                 `;
                 a.onclick = () => showDetail(item);
                 lista.appendChild(a);
             });
 
             document.getElementById("range").textContent =
-                `${start + 1} - ${Math.min(end, data.length)} / ${data.length}`;
+                `${sourceData.length > 0 ? start + 1 : 0} - ${Math.min(end, sourceData.length)} / ${sourceData.length}`;
         };
 
         // Renderiza detalles con acordeón dinámico
         const showDetail = item => {
+
+            const nombre = escapeHTML(item["NOMBRE COMERCIAL"]);
+            const representante = escapeHTML(item["REPRESENTANTE LEGAL"]);
+            const entrega = escapeHTML(item.ENTREGA);
+            const vigencia = escapeHTML(item.VIGENCIA);
+            const domicilio = escapeHTML(item.DOMICILIO);
+            const municipio = escapeHTML(item.MUNICIPIO);
+            const quejas = escapeHTML(item["QUEJAS Y DENUNCIAS"]);
+
             document.getElementById("logo").src = item.FOTO || 'https://via.placeholder.com/120';
-            document.getElementById("nombre").textContent = item["NOMBRE COMERCIAL"] || '';
-            document.getElementById("representante").textContent = item["REPRESENTANTE LEGAL"] || '';
+            document.getElementById("nombre").textContent = nombre;
+            document.getElementById("representante").textContent = representante;
 
             const sections = [
                 {
                     title: "General",
                     content: `
-                        <p><strong>Fecha de inicio:</strong> ${item.ENTREGA || ''}</p>
-                        <p><strong>Fecha de vencimiento:</strong> ${item.VIGENCIA || ''}</p>
+                        <p><strong>Fecha de inicio:</strong> ${entrega || ''}</p>
+                        <p><strong>Fecha de vencimiento:</strong> ${vigencia || ''}</p>
                     `
                 },
                 {
                     title: "Información domiciliaria",
                     content: `
-                        <p><strong>Dirección:</strong> ${item.DOMICILIO || ''}</p>
-                        <p><strong>Municipio:</strong> ${item.MUNICIPIO || ''}</p>
+                        <p><strong>Dirección:</strong> ${domicilio || ''}</p>
+                        <p><strong>Municipio:</strong> ${municipio || ''}</p>
                     `
                 },
                 {
                     title: "Quejas y denuncias",
-                    content: `<p>${item["QUEJAS Y DENUNCIAS"] || ''}</p>`
+                    content: `<p>${quejas || ''}</p>`
                 }
             ];
 
@@ -186,8 +216,30 @@
 
         // Carga CSV
         csvToJson("Data.csv").then(r => {
+            filteredData = r;
             data = r;
             renderList();
+        });
+
+        //Filtrar datos
+        let filteredData = [];
+
+        const filterData = (query) => {
+            const term = query.toLowerCase().trim();
+
+            filteredData = data.filter(item => {
+                const nombre = (item["NOMBRE COMERCIAL"] || "").toLowerCase();
+                const folio = (item.FOLIO || "").toLowerCase();
+
+                return nombre.includes(term) || folio.includes(term);
+            });
+
+            currentPage = 1;
+            renderList();
+        };
+
+        document.getElementById("buscador").addEventListener("input", (e) => {
+            filterData(e.target.value);
         });
     </script>
 
