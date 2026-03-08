@@ -131,10 +131,12 @@ const reaiElementShowDetail = (element) => {
     const address = reaiHighLight(element.DOMICILIO, query) || "No especificado";
     const municipality = reaiHighLight(element.MUNICIPIO, query) || "No especificado";
     const complaints = reaiHighLight(element.DENUNCIAS, query) || "No especificado";
-    const names = element.NOMBRES
-        .split(',')
-        .map(name => `<span>${reaiHighLight(name.trim(), query)}</span>`)
-        .join(' ') || "<span>No especificado</span>";
+    const names = (element.NOMBRES || "")
+        .split(",")
+        .map(name => name.trim())
+        .filter(Boolean)
+        .map(name => `<span>${reaiHighLight(name, query)}</span>`)
+        .join(" ") || "<span>No especificado</span>";
 
 
     document.getElementById("reai-head").innerHTML = `
@@ -255,6 +257,7 @@ document.addEventListener("DOMContentLoaded", async () => {
 
     await reaiTableGetData("https://docs.google.com/spreadsheets/d/e/2PACX-1vSK4NHbhsWLDz91B7Qszcypuz6xK7Jm2ueyFqsGAeSL6x1mUwu6jcdevKcbRJiJFmL-sz7Se0HAB0Dp/pub?gid=622727575&single=true&output=csv").then(d => {
         loader.remove();
+        document.getElementById("reai-container").classList.remove("visually-hidden");
         reaiRenderList();
     })
 
