@@ -131,6 +131,8 @@ const reaiElementShowDetail = (element) => {
     const address = reaiHighLight(element.DOMICILIO, query) || "No especificado";
     const municipality = reaiHighLight(element.MUNICIPIO, query) || "No especificado";
     const complaints = reaiHighLight(element.DENUNCIAS, query) || "No especificado";
+    const pdfUrl = reaiHighLight(element.ADICIONAL);
+
     const names = (element.NOMBRES || "")
         .split(",")
         .map(name => name.trim())
@@ -164,7 +166,7 @@ const reaiElementShowDetail = (element) => {
         </li>
         <li class="nav-item flex-fill text-center" role="presentation">
             <button class="nav-link w-100" data-bs-toggle="tab" data-bs-target="#tab3" type="button" role="tab">
-                Quejas y Denuncias
+                Información Adicional
             </button>
         </li>
     </ul>
@@ -201,7 +203,20 @@ const reaiElementShowDetail = (element) => {
             </ul>
         </div>
         <div class="tab-pane fade" id="tab3" role="tabpanel">
-            <span>${complaints}</span>
+            <div class="mb-3">
+                <h6 class="fw-bold">Quejas y Denuncias:</h6>
+                <p>${complaints}</p>
+            </div>
+            <hr>
+            <div>
+                <h6 class="fw-bold">Documentación:</h6>
+                ${pdfUrl 
+                    ? `<a href="${pdfUrl}" target="_blank" class="btn btn-sm btn-outline-danger">
+                        <i class="bi bi-file-pdf"></i> Ver archivo PDF adicional
+                       </a>` 
+                    : '<span class="text-muted">No hay archivos adicionales disponibles.</span>'
+                }
+            </div>
         </div>
     </div>
     `;
