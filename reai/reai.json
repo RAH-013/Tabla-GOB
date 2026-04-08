@@ -1,0 +1,63 @@
+{
+    "list": {
+        "titleKey": "EMPRESA",
+        "subtitleKey": "FOLIO",
+        "imageKey": "LOGOTIPO"
+    },
+    "header": {
+        "titleKey": "EMPRESA",
+        "subtitleKey": "REPRESENTANTE",
+        "subtitleLabel": "Representante Legal:",
+        "imageKey": "LOGOTIPO"
+    },
+    "tabs": [
+        {
+            "id": "tab-general",
+            "title": "General",
+            "fields": [
+                {
+                    "label": "Asesores:",
+                    "key": "NOMBRES"
+                },
+                {
+                    "label": "Fecha Inicio:",
+                    "key": "ENTREGA"
+                },
+                {
+                    "label": "Fecha Vencimiento:",
+                    "key": "VIGENCIA"
+                }
+            ]
+        },
+        {
+            "id": "tab-domicilio",
+            "title": "Información Domiciliaria",
+            "fields": [
+                {
+                    "label": "Dirección:",
+                    "key": "DOMICILIO"
+                },
+                {
+                    "label": "Municipio:",
+                    "key": "MUNICIPIO"
+                }
+            ]
+        },
+        {
+            "id": "tab-adicional",
+            "title": "Información Adicional",
+            "fields": [
+                {
+                    "label": "Quejas y Denuncias:",
+                    "key": "DENUNCIAS"
+                },
+                {
+                    "label": "Documentación:",
+                    "key": "ADICIONAL",
+                    "type": "link",
+                    "linkLabel": "Ver archivo PDF"
+                }
+            ]
+        }
+    ]
+}

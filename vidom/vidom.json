@@ -1,0 +1,58 @@
+{
+    "list": {
+        "subtitleKey": "NOMBRE",
+        "imageKey": "LOGO_OPCIONAL"
+    },
+    "header": {
+        "titleKey": "NOMBRE",
+        "subtitleKey": "AUTORIDAD",
+        "subtitleLabel": "",
+        "imageKey": "LOGO_OPCIONAL"
+    },
+    "tabs": [
+        {
+            "id": "tab-detalles",
+            "title": "Detalles",
+            "fields": [
+                {
+                    "label": "Modalidad:",
+                    "key": "MODALIDAD"
+                },
+                {
+                    "label": "Objetivo:",
+                    "key": "OBJETIVO DE LA INSPECCION"
+                },
+                {
+                    "label": "Fundamento jurídico:",
+                    "key": "FUNDAMENTO JURIDICO"
+                }
+            ]
+        },
+        {
+            "id": "tab-contacto",
+            "title": "Contacto",
+            "fields": [
+                {
+                    "label": "Unidad Administrativa:",
+                    "key": "UNIDAD ADMINISTRATIVA"
+                },
+                {
+                    "label": "Teléfono de contacto:",
+                    "key": "TELEFONO"
+                }
+            ]
+        },
+        {
+            "id": "tab-documento",
+            "title": "Documentación",
+            "fields": [
+                {
+                    "label": "Documento anexo:",
+                    "key": "FICHA",
+                    "type": "link",
+                    "linkLabel": "Ver ficha completa"
+                }
+            ]
+        }
+    ]
+}
