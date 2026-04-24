@@ -1,0 +1,44 @@
+{
+    "list": {
+        "titleKey": "NOMBRE",
+        "imageKey": "FOTO"
+    },
+    "header": {
+        "titleKey": "NOMBRE",
+        "subtitleKey": "CARGO",
+        "subtitleLabel": "",
+        "imageKey": "FOTO"
+    },
+    "tabs": [
+        {
+            "id": "tab-general",
+            "title": "General",
+            "fields": [
+                {
+                    "label": "Número o clave de empleado:",
+                    "key": "CLAVE"
+                },
+                {
+                    "label": "Dependencia, Dirección, Órgano Administrativo o Autoridad del Estado al que está adscrito:",
+                    "key": "DEPENDENCIA"
+                }
+            ]
+        },
+        {
+            "id": "tab-adicional",
+            "title": "Acreditación",
+            "fields": [
+                {
+                    "label": "Documento que acredite cargo o nombramiento:",
+                    "key": "NOMBRE DE ACREDITACIÓN"
+                },
+                {
+                    "label": "Ficha completa:",
+                    "key": "DOCUMENTO DE ACREDITACIÓN",
+                    "type": "link",
+                    "linkLabel": "Ver archivo PDF"
+                }
+            ]
+        }
+    ]
+}
